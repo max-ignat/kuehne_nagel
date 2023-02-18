@@ -8,7 +8,7 @@ import {getData} from './services/api'
 
 const App = () => {
   const [showModal, setShowModal] = useState(false);
-  const [edit, setEdit] = useState(false);
+  const [, setEdit] = useState(false);
 //! local storage
   // const [data, setData] = useState(() => {
   //   return JSON.parse(window.localStorage.getItem("data")) ?? [];

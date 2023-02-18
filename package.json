@@ -1,5 +1,6 @@
 {
-  "name": "movies",
+  "name": "kuehne_nagel",
+  "homepage": "https://max-ignat.github.io/kuehne_nagel/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
