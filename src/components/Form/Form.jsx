@@ -67,7 +67,7 @@ const Form = ({ submitPropValue }) => {
             Order No
             <FormInput
               onChange={handleChange}
-              type="number"
+              type="tell"
               name="orderNo"
               placeholder="  type orderNo"
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -112,7 +112,7 @@ const Form = ({ submitPropValue }) => {
             TrackingNo
             <FormInput
               onChange={handleChange}
-              type="number"
+              type="text"
               name="trackingNo"
               placeholder="  type digits"
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"

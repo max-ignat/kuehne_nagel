@@ -1,19 +1,26 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 // import initialData from './services/data.json'
 import DataList from "./components/DataList";
 // import shortid from "shortid";
 import Form from "./components/Form/Form";
 import Modal from './components/Modal'
-import {getData} from './services/api'
+// import { getData } from "./services/api";
 
-const App = () => {
+const App = (data) => {
   const [showModal, setShowModal] = useState(false);
-  const [, setEdit] = useState(false);
+  const columns = [
+    { field: "orderNo", fieldName: "Order No." },
+    { field: "date", fieldName: "Date" },
+    { field: "customer", fieldName: "Customer" },
+    { field: "trackingNo", fieldName: "Tracking No." },
+    { field: "status", fieldName: "Status" },
+    { field: "consignee", fieldName: "Consignee" },
+  ];
 //! local storage
   // const [data, setData] = useState(() => {
   //   return JSON.parse(window.localStorage.getItem("data")) ?? [];
   // });
-//!uncomment if api not working 
+// !uncomment if api not working 
   // const [data, setData] = useState([
   //   {
   //     orderNo: "zz-450581-11385595-4210084",
@@ -50,23 +57,23 @@ const App = () => {
   // ]);
 
   //!uncomment if api works 
-    const [data, setData] = useState();
+    // const [data, setData] = useState();
   // const [filter, setFilter] = useState("");
   
   
 //!if api if working uncomment
-    useEffect(() => {
-      async function fetchData() {
-        try {
-          const response = await getData();
-          setData(response.data);
-          console.log("response", response.data);
-        } catch (response) {
-          console.log("error", response.message);
-        }
-      }
-      fetchData();
-    }, []);
+    // useEffect(() => {
+    //   async function fetchData() {
+    //     try {
+    //       const response = await getData();
+    //       setData(response.data);
+    //       console.log("response", response.data);
+    //     } catch (response) {
+    //       console.log("error", response.message);
+    //     }
+    //   }
+    //   fetchData();
+    // }, []);
 
   const toggleModal = () => {
     if (showModal) {
@@ -76,49 +83,46 @@ const App = () => {
     }
   };
 
-const deleteDetail = (orderNo) => {
-  setData((data) => data.filter((detail) => detail.orderNo !== orderNo));
-};
-  const editDetail = (orderNo) => {
-    setEdit(true);
-    console.log("edit");
-  };
+// const deleteDetail = (orderNo) => {
+//   setData((data) => data.filter((detail) => detail.orderNo !== orderNo));
+// };
+  
   // !local storage
   // useEffect(() => {
   //   window.localStorage.setItem("data", JSON.stringify(data));
   // }, [data]);
 
-  const addToContacts = ({
-    orderNo,
-    date,
-    customer,
-    trackingNo,
-    status,
-    consignee,
-  }) => {
-    const lowerCasedName = customer.toLowerCase();
+  // const addToContacts = ({
+  //   orderNo,
+  //   date,
+  //   customer,
+  //   trackingNo,
+  //   status,
+  //   consignee,
+  // }) => {
+  //   const lowerCasedName = customer.toLowerCase();
 
-    let added = data.find(
-      (detail) => detail.customer.toLowerCase() === lowerCasedName
-    );
+  //   let added = data.find(
+  //     (detail) => detail.customer.toLowerCase() === lowerCasedName
+  //   );
 
-    const detail = {
-      orderNo,
-      date,
-      customer,
-      trackingNo,
-      status,
-      consignee,
-    };
+  //   const detail = {
+  //     orderNo,
+  //     date,
+  //     customer,
+  //     trackingNo,
+  //     status,
+  //     consignee,
+  //   };
 
-    if (added) {
-      alert(`${customer} is already in contacts`);
-      return;
-    }
+  //   if (added) {
+  //     alert(`${customer} is already in contacts`);
+  //     return;
+  //   }
 
-    setData((data) => [...data, detail]);
-    toggleModal();
-  };
+  //   setData((data) => [...data, detail]);
+  //   toggleModal();
+  // };
 
   // const changeFilter = (event) => {
   //   setFilter({ filter: event.currentTarget.value });
@@ -141,17 +145,18 @@ const deleteDetail = (orderNo) => {
       </button>
       {showModal && (
         <Modal onClose={toggleModal}>
-          <Form submitPropValue={addToContacts} />
-
+          <Form  />
+          {/* <Form submitPropValue={addToContacts} /> */}
           <button type="button" onClick={toggleModal}>
             minimize
           </button>
         </Modal>
       )}
       <DataList
-        onEditDetail={editDetail}
-        data={data}
-        onDeleteDetail={deleteDetail}
+        columns={columns}
+    
+        // data={data}
+        // onDeleteDetail={deleteDetail}
       />
     </div>
   );
