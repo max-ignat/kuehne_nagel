@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/kuehne_nagel/static/js/main.91493c26.js",
+    "main.js": "/kuehne_nagel/static/js/main.1d84ab50.js",
     "index.html": "/kuehne_nagel/index.html",
-    "main.91493c26.js.map": "/kuehne_nagel/static/js/main.91493c26.js.map"
+    "main.1d84ab50.js.map": "/kuehne_nagel/static/js/main.1d84ab50.js.map"
   },
   "entrypoints": [
-    "static/js/main.91493c26.js"
+    "static/js/main.1d84ab50.js"
   ]
 }
