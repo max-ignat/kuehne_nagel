@@ -5,11 +5,11 @@ display: grid;
   border-collapse: collapse;
   min-width: 100%;
   grid-template-columns: 
-    minmax(100px, 0.5fr)
-    minmax(150px, 0.2fr)
+    minmax(100px, 0.9fr)
+    minmax(100px, 0.7fr)
     minmax(100px, 0.6fr)
+    minmax(100px, 0.9fr)
     minmax(100px, 0.6fr)
-    minmax(100px, 0.1fr)
     minmax(100px, 1fr)
 `;
 

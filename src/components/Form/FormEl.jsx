@@ -7,17 +7,15 @@ import * as yup from 'yup';
 
 
 const schema = yup.object().shape({
-  
-
   orderNo: yup.string().required("Enter order"),
-  date: yup.string().notRequired("Optional"),
+  date: yup.string().required("Optional"),
   customer: yup.string().required("Customer name is required field"),
   trackingNo: yup.string().required("tracking is required field"),
-  status: yup.string().notRequired("Optional"),
+  status: yup.string().required("Optional"),
   consignee: yup.string().required("onsignee is required field"),
 });
 
-const Form = ({ submitPropValue }) => {
+const FormEl = ({ submitPropValue }) => {
   const [state, setState] = useState({
     orderNo: "",
     date: "",
@@ -49,7 +47,7 @@ const Form = ({ submitPropValue }) => {
       orderNo: "",
       date: "",
       customer: "",
-      trackingNo: "TP-",
+      trackingNo: "",
       status: "",
       consignee: "",
     });
@@ -67,10 +65,10 @@ const Form = ({ submitPropValue }) => {
             Order No
             <FormInput
               onChange={handleChange}
-              type="tell"
+              type="text"
               name="orderNo"
               placeholder="  type orderNo"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               value={orderNo}
               id={nameInputId}
               required
@@ -85,7 +83,7 @@ const Form = ({ submitPropValue }) => {
               type="text"
               name="date"
               placeholder="  type date"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               value={date}
               id={numberInputId}
               required
@@ -100,7 +98,7 @@ const Form = ({ submitPropValue }) => {
               type="text"
               name="customer"
               placeholder="  type customer name"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+              // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               value={customer}
               id={numberInputId}
               required
@@ -112,10 +110,10 @@ const Form = ({ submitPropValue }) => {
             TrackingNo
             <FormInput
               onChange={handleChange}
-              type="text"
+              type="tel"
               name="trackingNo"
               placeholder="  type digits"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               value={trackingNo}
               id={numberInputId}
               required
@@ -129,7 +127,7 @@ const Form = ({ submitPropValue }) => {
               type="text"
               name="status"
               placeholder="  type digits"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+              // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               value={status}
               id={numberInputId}
               required
@@ -144,8 +142,7 @@ const Form = ({ submitPropValue }) => {
               type="text"
               name="consignee"
               placeholder="  type consigee"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              // title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+              // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               value={consignee}
               id={numberInputId}
               required
@@ -160,4 +157,4 @@ const Form = ({ submitPropValue }) => {
   );
 };
 
-export default Form;
+export default FormEl;
