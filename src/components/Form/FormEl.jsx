@@ -6,6 +6,8 @@ import * as yup from 'yup';
 
 
 
+
+
 const schema = yup.object().shape({
   orderNo: yup.string().required("Enter order"),
   date: yup.string().required("Optional"),
@@ -16,6 +18,7 @@ const schema = yup.object().shape({
 });
 
 const FormEl = ({ submitPropValue }) => {
+  
   const [state, setState] = useState({
     orderNo: "",
     date: "",
@@ -36,7 +39,7 @@ const FormEl = ({ submitPropValue }) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-
+    
     submitPropValue({ orderNo, date, customer, trackingNo, status, consignee });
 
     reset();
@@ -55,20 +58,21 @@ const FormEl = ({ submitPropValue }) => {
 
   const nameInputId = shortid.generate();
   const numberInputId = shortid.generate();
+  
+
 
   const { orderNo, date, customer, trackingNo, status, consignee } = state;
   return (
     <div>
-      <Formik validationSchema={schema}>
+      <Formik validationSchema={schema} >
         <FormWrap onSubmit={handleSubmit}>
           <Label htmlFor={nameInputId}>
-            Order No
+            Order No: 
             <FormInput
               onChange={handleChange}
               type="text"
               name="orderNo"
               placeholder="  type orderNo"
-              // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               value={orderNo}
               id={nameInputId}
               required
@@ -83,7 +87,7 @@ const FormEl = ({ submitPropValue }) => {
               type="text"
               name="date"
               placeholder="  type date"
-              // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              pattern="\d{2}/\d{2}/\d{4}"
               value={date}
               id={numberInputId}
               required

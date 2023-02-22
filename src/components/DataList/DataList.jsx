@@ -1,6 +1,6 @@
 // import { CgAdd, CgCloseO } from "react-icons/cg";
 import { PencilFill, Save, Trash, XSquare } from "react-bootstrap-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Form } from "react-bootstrap";
 import { getData } from "../../services/api";
 import Modal from "../Modal/Modal";
@@ -16,7 +16,9 @@ import {
   TableDataCell,
 } from "./DataList.styled";
 
-const DataList = ({ actions, Setdata }) => {
+
+const DataList = ({ actions  }) => {
+  
   const [showModal, setShowModal] = useState(false);
   const [data, setData] =
     useState();
@@ -776,28 +778,43 @@ const DataList = ({ actions, Setdata }) => {
     fetchData();
   }, []);
 
-  const handleEdit = (orderNo) => {
-    setIsEditMode(true);
+  const handleEdit = useCallback((orderNo) => {
+      setIsEditMode(true);
     setEditedRow(undefined);
     setRowIDToEdit(orderNo);
-  };
+    },
+    [],
+  )
+    
 
-  const handleRemoveRow = (orderNo) => {
-    setData((data) => data.filter((detail) => detail.orderNo !== orderNo));
-  };
+  const handleRemoveRow = useCallback(
+    (orderNo) => {
+      setData((data) => data.filter((detail) => detail.orderNo !== orderNo));
+    },
+    [],
+  )
+  
 
-  const handleOnChangeField = (e, orderNo) => {
-    const { name: fieldName, value } = e.target;
+  const handleOnChangeField = useCallback(
+    (e, orderNo) => {
+      const { name: fieldName, value } = e.target;
     setEditedRow({
       orderNo,
       [fieldName]: value,
     });
-  };
+    },
+    [],
+  )
+  
 
-  const handleCancelEditing = () => {
-    setIsEditMode(false);
+  const handleCancelEditing = useCallback(() => {
+      setIsEditMode(false);
     setEditedRow(undefined);
-  };
+    },
+    [],
+  )
+  
+    
 
   const handleSaveRowChanges = () => {
     setIsEditMode(false);
@@ -809,7 +826,7 @@ const DataList = ({ actions, Setdata }) => {
         if (editedRow.trackingNo) row.trackingNo = editedRow.trackingNo;
         if (editedRow.status) row.status = editedRow.status;
         if (editedRow.consignee) row.consignee = editedRow.consignee;
-        // if (editedRow.role) row.role = editedRow.role;
+        
       }
       // console.log(row.orderNo)
       return row;
@@ -818,22 +835,19 @@ const DataList = ({ actions, Setdata }) => {
     setEditedRow(undefined);
   };
 
-  const toggleModal = () => {
-    if (showModal) {
+  const toggleModal =useCallback(
+    () => {
+      if (showModal) {
       setShowModal(false);
     } else {
       setShowModal(true);
     }
-  };
+    },
+    [showModal],
+  );
 
-  const addNewTrack = ({
-    orderNo,
-    date,
-    customer,
-    trackingNo,
-    status,
-    consignee,
-  }) => {
+const addNewTrack = useCallback(
+  ({ orderNo, date, customer, trackingNo, status, consignee }) => {
     const lowerCasedName = customer.toLowerCase();
 
     let added = data.find(
@@ -849,16 +863,21 @@ const DataList = ({ actions, Setdata }) => {
       consignee,
     };
 
-    if (added) {
-      alert(`${customer} is already in contacts`);
-      return;
-    }
+   if (added) {
+     alert(`${orderNo} is already in the list`);
+     return;
+   }
+
 
     setData((data) => [...data, detail]);
     toggleModal();
-  };
+  },
+  [setData, toggleModal, data]
+);
+
 
   return (
+    
     <>
       <h1>Shipment schedule</h1>
 
@@ -910,6 +929,7 @@ const DataList = ({ actions, Setdata }) => {
                     {isEditMode && rowIDToEdit === orderNo ? (
                       <Form.Control
                         type="date"
+                        
                         defaultValue={editedRow ? editedRow.date : date}
                         id={orderNo}
                         name="date"
