@@ -867,8 +867,6 @@ const addNewTrack = useCallback(
      alert(`${orderNo} is already in the list`);
      return;
    }
-
-
     setData((data) => [...data, detail]);
     toggleModal();
   },

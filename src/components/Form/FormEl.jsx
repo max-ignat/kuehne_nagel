@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React , { useState , useMemo} from 'react';
 import { Formik } from 'formik';
 import { FormInput, Label, Button, FormWrap, Error} from './Form.styled';
 import shortid from 'shortid';
@@ -56,8 +56,8 @@ const FormEl = ({ submitPropValue }) => {
     });
   };
 
-  const nameInputId = shortid.generate();
-  const numberInputId = shortid.generate();
+  const nameInputId =   useMemo(() => shortid.generate(), []);
+  const numberInputId = useMemo(() => shortid.generate(), []);
   
 
 
