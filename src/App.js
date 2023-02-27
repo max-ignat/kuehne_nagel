@@ -6,16 +6,8 @@ import DataList from "./components/DataList";
 
 // import { getData } from "./services/api";
 
-const App = (data) => {
-  
-  // const columns = [
-  //   { field: "orderNo", fieldName: "Order No." },
-  //   { field: "date", fieldName: "Date" },
-  //   { field: "customer", fieldName: "Customer" },
-  //   { field: "trackingNo", fieldName: "Tracking No." },
-  //   { field: "status", fieldName: "Status" },
-  //   { field: "consignee", fieldName: "Consignee" },
-  // ];
+const App = () => {
+
 
   return (
     <>      
