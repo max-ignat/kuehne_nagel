@@ -16,39 +16,36 @@ import {
   TableDataCell,
 } from "./DataList.styled";
 
-
-const DataList = ({ actions  }) => {
-  
+const DataList = ({ actions }) => {
   const [showModal, setShowModal] = useState(false);
-  const [data, setData] =
-    useState();
-    // [
-    // {
-    //   orderNo: "zz-450581-11385595-4210084",
-    //   date: "10/16/2019",
-    //   customer: "NXP Semiconductors N.V.",
-    //   trackingNo: "TP-724057-72553473-5647860",
-    //   status: "'In Transit'",
-    //   consignee: "Koppers Holdings Inc.",
-    // },
-    // {
-    //   orderNo: "kk-275651-64476049-3346442",
-    //   date: "8/20/2019",
-    //   customer: "Triumph Bancorp, Inc.",
-    //   trackingNo: "TP-011637-13598236-2700556",
-    //   status: "'Delivered'",
-    //   consignee: "Celsius Holdings, Inc.",
-    // },
-    // {
-    //   orderNo: "nz-906145-26850629-1813784",
-    //   date: "7/10/2019",
-    //   customer: "Inter Parfums, Inc.",
-    //   trackingNo: "TP-065338-70937481-7664135",
-    //   status: "'Delivered'",
-    //   consignee: "Hovnanian Enterprises Inc",
-    // },
-    // 
-    // ]
+  const [data, setData] = useState();
+  // [
+  // {
+  //   orderNo: "zz-450581-11385595-4210084",
+  //   date: "10/16/2019",
+  //   customer: "NXP Semiconductors N.V.",
+  //   trackingNo: "TP-724057-72553473-5647860",
+  //   status: "'In Transit'",
+  //   consignee: "Koppers Holdings Inc.",
+  // },
+  // {
+  //   orderNo: "kk-275651-64476049-3346442",
+  //   date: "8/20/2019",
+  //   customer: "Triumph Bancorp, Inc.",
+  //   trackingNo: "TP-011637-13598236-2700556",
+  //   status: "'Delivered'",
+  //   consignee: "Celsius Holdings, Inc.",
+  // },
+  // {
+  //   orderNo: "nz-906145-26850629-1813784",
+  //   date: "7/10/2019",
+  //   customer: "Inter Parfums, Inc.",
+  //   trackingNo: "TP-065338-70937481-7664135",
+  //   status: "'Delivered'",
+  //   consignee: "Hovnanian Enterprises Inc",
+  // },
+  //
+  // ]
   const [isEditMode, setIsEditMode] = useState(false);
   const [rowIDToEdit, setRowIDToEdit] = useState(undefined);
   const [editedRow, setEditedRow] = useState();
@@ -76,54 +73,44 @@ const DataList = ({ actions  }) => {
   }, []);
 
   const handleEdit = useCallback((orderNo) => {
-      setIsEditMode(true);
+    setIsEditMode(true);
     setEditedRow(undefined);
     setRowIDToEdit(orderNo);
-    },
-    [],
-  )
-    
+  }, []);
 
-  const handleRemoveRow = useCallback(
-    (orderNo) => {
-      setData((data) => data.filter((detail) => detail.orderNo !== orderNo));
-    },
-    [],
-  )
-  
+  const handleRemoveRow = useCallback((orderNo) => {
+    setData((data) => data.filter((detail) => detail.orderNo !== orderNo));
+  }, []);
 
-  const handleOnChangeField = useCallback(
-    (e, orderNo) => {
-      const { name: fieldName, value } = e.target;
+  const handleOnChangeField = useCallback((e, orderNo) => {
+    const { name: fieldName, value } = e.target;
     setEditedRow({
       orderNo,
       [fieldName]: value,
     });
-    },
-    [],
-  )
-  
+  }, []);
 
   const handleCancelEditing = useCallback(() => {
-      setIsEditMode(false);
+    setIsEditMode(false);
     setEditedRow(undefined);
-    },
-    [],
-  )
-  
-    
+  }, []);
 
   const handleSaveRowChanges = () => {
     setIsEditMode(false);
     const newData = data.map((row) => {
       if (row.orderNo === editedRow.orderNo) {
         if (editedRow.orderNo) row.orderNo = editedRow.orderNo;
-        if (editedRow.date) row.date = editedRow.date;
+        // if (editedRow.date) row.date = editedRow.date;
+        if (editedRow.date) {
+          const dateObj = new Date(editedRow.date);
+          const formattedDate = `${dateObj.getMonth() + 1}/${dateObj.getDate()}/${dateObj.getFullYear()}`;
+          row.date = formattedDate;
+        }
+
         if (editedRow.customer) row.customer = editedRow.customer;
         if (editedRow.trackingNo) row.trackingNo = editedRow.trackingNo;
         if (editedRow.status) row.status = editedRow.status;
         if (editedRow.consignee) row.consignee = editedRow.consignee;
-        
       }
       // console.log(row.orderNo)
       return row;
@@ -132,47 +119,42 @@ const DataList = ({ actions  }) => {
     setEditedRow(undefined);
   };
 
-  const toggleModal =useCallback(
-    () => {
-      if (showModal) {
+  const toggleModal = useCallback(() => {
+    if (showModal) {
       setShowModal(false);
     } else {
       setShowModal(true);
     }
+  }, [showModal]);
+
+  const addNewTrack = useCallback(
+    ({ orderNo, date, customer, trackingNo, status, consignee }) => {
+      const lowerCasedName = customer.toLowerCase();
+
+      let added = data.find(
+        (detail) => detail.customer.toLowerCase() === lowerCasedName
+      );
+
+      const detail = {
+        orderNo,
+        date,
+        customer,
+        trackingNo,
+        status,
+        consignee,
+      };
+
+      if (added) {
+        alert(`${orderNo} is already in the list`);
+        return;
+      }
+      setData((data) => [...data, detail]);
+      toggleModal();
     },
-    [showModal],
+    [setData, toggleModal, data]
   );
 
-const addNewTrack = useCallback(
-  ({ orderNo, date, customer, trackingNo, status, consignee }) => {
-    const lowerCasedName = customer.toLowerCase();
-
-    let added = data.find(
-      (detail) => detail.customer.toLowerCase() === lowerCasedName
-    );
-
-    const detail = {
-      orderNo,
-      date,
-      customer,
-      trackingNo,
-      status,
-      consignee,
-    };
-
-   if (added) {
-     alert(`${orderNo} is already in the list`);
-     return;
-   }
-    setData((data) => [...data, detail]);
-    toggleModal();
-  },
-  [setData, toggleModal, data]
-);
-
-
   return (
-    
     <>
       <h1>Shipment schedule</h1>
 
@@ -224,7 +206,6 @@ const addNewTrack = useCallback(
                     {isEditMode && rowIDToEdit === orderNo ? (
                       <Form.Control
                         type="date"
-                        
                         defaultValue={editedRow ? editedRow.date : date}
                         id={orderNo}
                         name="date"
