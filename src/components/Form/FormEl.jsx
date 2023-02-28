@@ -9,7 +9,7 @@ import * as yup from 'yup';
 
 
 const schema = yup.object().shape({
-  orderNo: yup.string().required("Enter order"),
+  // orderNo: yup.string().required("Enter order"),
   date: yup.string().required("Optional"),
   customer: yup.string().required("Customer name is required field"),
   trackingNo: yup.string().required("tracking is required field"),
@@ -20,7 +20,7 @@ const schema = yup.object().shape({
 const FormEl = ({ submitPropValue }) => {
   
   const [state, setState] = useState({
-    orderNo: "",
+    orderNo: shortid.generate(),
     date: "",
     customer: "",
     trackingNo: "",
@@ -61,14 +61,22 @@ const FormEl = ({ submitPropValue }) => {
   
 
 
-  const { orderNo, date, customer, trackingNo, status, consignee } = state;
+  const {
+    orderNo,
+    date,
+    customer,
+    trackingNo,
+    status,
+    consignee,
+  } = state;
   return (
     <div>
-      <Formik validationSchema={schema} >
+      <Formik validationSchema={schema}>
         <FormWrap onSubmit={handleSubmit}>
           <Label htmlFor={nameInputId}>
-            Order No: 
+            Order number will generate automaticly
             <FormInput
+              disabled={true}
               onChange={handleChange}
               type="text"
               name="orderNo"
